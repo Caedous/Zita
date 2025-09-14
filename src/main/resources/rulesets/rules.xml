@@ -1,0 +1,644 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ruleset"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>
+    Ruleset for zita focusing on basic coding practices, variable usage, and event handling in Processing programs used at macquarie university in COMP1000 - introduction to computer programming.
+    </description>
+
+
+    <rule name="HasVariableRule" message="No variables are declared in this code." class="nl.utwente.processing.pmd.rules.HasVariableRule">
+        <description>
+        Reports if no variables are declared in the code.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+        // No variable declared // ❌ flagged
+        int x = 5; // ✅ not flagged
+    ]]>        </example>
+    </rule>
+    <!-- Additional rules would go here -->
+
+
+
+    <!-- More rules continue here -->
+
+
+
+    <rule name="HasUserDefinedMethod" message="No user-defined methods found." class="nl.utwente.processing.pmd.rules.HasUserDefinedMethod">
+        <description>
+        Reports if there are no user-defined methods in the code (excluding standard lifecycle methods).
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+        // No method declared // ❌ flagged
+        void helper() {} // ✅ not flagged
+    ]]>        </example>
+    </rule>
+
+
+
+
+
+    <rule name="ThisKeywordUsageRule" message="The 'this' keyword is used." class="nl.utwente.processing.pmd.rules.HasThisKeywordRule">
+        <description>
+        Reports usage of the 'this' keyword in the code.
+        </description>
+        <priority>4</priority>
+        <example><![CDATA[
+        this.x = 5; // ❌ flagged
+    ]]>        </example>
+    </rule>
+
+    <rule name="AdvancedProcessingFunctionRule" message="Advanced Processing functions are used." class="nl.utwente.processing.pmd.rules.HasAdvancedProcessingFunctionRule">
+        <description>
+        Reports usage of advanced Processing functions (e.g., translate, rotate, scale, pushMatrix, popMatrix).
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+        translate(50, 100);  // ❌ flagged
+        rotate(PI/4);        // ❌ flagged
+    ]]>        </example>
+    </rule>
+
+
+
+    <rule ref="category/java/design.xml/CognitiveComplexity" message="The {0} ''{1}'' seems to be complex. Consider reviewing or refactoring it for clarity.">
+        <priority>3</priority>
+        <properties>
+            <property name="reportLevel" value="10"/>
+        </properties>
+    </rule>
+
+    <rule name="HasClassUsageRule" message="Non-standard Java classes are used." class="nl.utwente.processing.pmd.rules.HasClassUsageRule">
+        <description>
+            Reports usage of Java classes that are not part of the standard or intended API.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            ArrayList<Integer> list = new ArrayList<>(); // ❌ flagged
+        ]]>        </example>
+    </rule>
+
+
+    <rule name="HasTernaryOperatorRule" message="Ternary operator is used." class="nl.utwente.processing.pmd.rules.HasTernaryOperatorRule">
+        <description>
+            Reports use of the ternary (conditional) operator.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            int max = (a > b) ? a : b; // ❌ flagged
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasForEachLoopRule" message="For-each loop is used." class="nl.utwente.processing.pmd.rules.HasForEachLoopRule">
+        <description>
+            Reports use of the enhanced for-each loop.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            for (int n : numbers) { ... } // ❌ flagged
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasArrayUsageRule" message="No arrays are used in this code." class="nl.utwente.processing.pmd.rules.HasArrayUsageRule">
+        <description>
+            Reports if no arrays are used in the code.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            // No arrays declared in the code // ❌ flagged
+            int[] arr = new int[5]; // ✅ not flagged
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasNonVoidFunctionRule" message="No non-void functions found." class="nl.utwente.processing.pmd.rules.HasNonVoidFunctionRule">
+        <description>
+            Reports if there are no user-defined functions with a return type other than void.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            int add(int a, int b) { return a + b; } // ✅
+            void doSomething() { ... } // not enough alone
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasFunctionWithParametersRule" message="No functions with parameters found." class="nl.utwente.processing.pmd.rules.HasFunctionWithParametersRule">
+        <description>
+            Reports if there are no user-defined functions with parameters.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            void move(int dx, int dy) { ... } // ✅
+            void doSomething() { ... } // not enough alone
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasPrivateModifierRule" message="The 'private' access modifier is used." class="nl.utwente.processing.pmd.rules.HasPrivateModifierRule">
+        <description>
+            Reports use of the 'private' access modifier on fields or methods.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            private int secret; // ❌ flagged
+            private void helper() { ... } // ❌ flagged
+        ]]>        </example>
+    </rule>
+
+    <rule name="HasFinalVariableRule" message="The 'final' keyword is used on a variable." class="nl.utwente.processing.pmd.rules.HasFinalVariableRule">
+        <description>
+            Reports use of the 'final' keyword on variables (fields).
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+            final int MAX = 10; // ❌ flagged
+        ]]>        </example>
+    </rule>
+
+
+
+
+    <rule name="UsingUserDefinedClass" message="A user-defined class is declared but not used." class="nl.utwente.processing.pmd.rules.UsingUserDefinedClass">
+        <description>
+        Reports if a user-defined class is declared but not instantiated or referenced in the code.
+        </description>
+        <priority>3</priority>
+        <example><![CDATA[
+        class Ball {
+            int x, y;
+            Ball(int x, int y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        void main() {
+            Ball b = new Ball(100, 200); // ✅ used
+        }
+    ]]>        </example>
+    </rule>
+
+
+    <rule name="HasUserDefinedConstructor" message="A user-defined class does not have an explicit constructor." class="nl.utwente.processing.pmd.rules.HasUserDefinedConstructor">
+        <description>
+        Reports if a user-defined class does not define at least one explicit constructor.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+            class Example {
+                // ✅ This constructor satisfies the rule
+                Example(int x, int y) {
+                    // ...
+                }
+            }
+        ]]>
+        </example>
+    </rule>
+
+
+
+    <rule name="HasUserDefinedClass" message="No user-defined class found." class="nl.utwente.processing.pmd.rules.HasUserDefinedClass">
+        <description>
+        Reports if there is no user-defined class declared in the code.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+            class Main {
+                void main() {
+                    Ball b = new Ball();
+                }
+                class Ball {
+                    int x;
+                    int y;
+                }
+            }
+        ]]>
+        </example>
+    </rule>
+
+
+    <rule name="VariableArithmeticRule" message="Few or no arithmetic operations using variables found." class="nl.utwente.processing.pmd.rules.VariableArithmeticRule">
+        <description>
+            Reports if the code contains few or no arithmetic operations involving variables.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                int x = 100;
+                int speed = 2;
+                void update() {
+                    // Using variables in arithmetic
+                    x = x + speed;
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="Has2DShapesRule" message="Few or no 2D shapes found in the code." class="nl.utwente.processing.pmd.rules.Has2DShapesRule">
+        <description>
+            Reports if the code contains few or no 2D primitive shapes.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void draw() {
+                    // Using multiple shapes
+                    rect(50, 50, 100, 100);
+                    ellipse(200, 200, 80, 80);
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="HasConditionsRule" message="Few or no conditional statements found." class="nl.utwente.processing.pmd.rules.HasConditionsRule">
+        <description>
+            Reports if the code contains few or no conditional statements (if, if-else, or ternary operator).
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void check() {
+                    if (a > b) {
+                        // ...
+                    }
+                    if (flag) {
+                        // ...
+                    }
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="HasLoopRule" message="Few or no loops found in the code." class="nl.utwente.processing.pmd.rules.HasLoopRule">
+        <description>
+            Reports if the code contains few or no loops (for, while, or do-while).
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void process() {
+                    for (int i = 0; i < 10; i++) {
+                        // ...
+                    }
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="HasEventHandlerRule" message="No event handler methods found." class="nl.utwente.processing.pmd.rules.HasEventHandlerRule">
+        <description>
+            Reports if the code contains no event handler methods (such as mousePressed, keyPressed, etc.).
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void mousePressed() {
+                    // Code to execute when mouse is pressed
+                }
+                void keyPressed() {
+                    // Code to execute when a key is pressed
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="HasDrawRule" message="No draw() method found." class="nl.utwente.processing.pmd.rules.HasDrawMethodRule">
+        <description>
+            Reports if the code does not contain a draw() method.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void draw() {
+                    // Drawing logic here
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="HasSetupRule" message="No setup() method found." class="nl.utwente.processing.pmd.rules.HasSetupMethodRule">
+        <description>
+            Reports if the code does not contain a setup() method.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                void setup() {
+                    // Setup logic here
+                }
+            ]]>
+        </example>
+    </rule>
+
+
+
+    <rule name="DecentralizedDrawingRule" message="Do not use drawing method {0} in method {1}, {1} is called outside of the draw sequence and can therefore not contain drawing methods." class="nl.utwente.processing.pmd.rules.DecentralizedDrawingRule">
+        <description>
+            Methods that draw on screen should only be called from drawing methods: methods that are (indirectly) called
+            solely by the draw method.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                float x, y, x2, y2;
+                void setup() {
+                    //Wrong: Do not use drawing functions from non-drawing methods.
+                    rect(x, y, x2, y2);
+                }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="DecentralizedEventHandlingRule" message="Do not use global event variable {0} in method {1}, as {1} is not one of the event handling methods." class="nl.utwente.processing.pmd.rules.DecentralizedEventHandlingRule">
+        <description>
+            Global event handling variables should only be used inside the specified event handler methods.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                 void draw() {
+                     //Wrong: Do not use mouseX, mouseY outside event handlers
+                     rect(mouseX, mouseY, mouseX + 20, mouseY + 20);
+                 }
+             ]]>
+        </example>
+    </rule>
+
+
+    <rule name="LongMethodRule" message="The method {0} is too long, {1} lines of code are counted. The method should be made more efficient, split in multiple methods, or responsibilty should be delegated to other objects/classes." class="nl.utwente.processing.pmd.rules.LongMethodRule">
+        <description>
+            Methods longer than a certain amount of rules (50 by default) should be split into separate method calls.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                 void method() {
+                     //Wrong: method is too long.
+                     println("T")
+                     println("h")
+                     println("i")
+                     println("s")
+                     println("")
+                     println("m")
+                     println("e")
+                     println("t")
+                     println("h")
+                     println("o")
+                     println("d")
+                     println("")
+                     println("i")
+                     println("s")
+                     println("")
+                     println("w")
+                     println("a")
+                     println("y")
+                     println("")
+                     println("t")
+                     println("o")
+                     println("o")
+                     println("")
+                     println("l")
+                     println("o")
+                     println("n")
+                     println("g")
+                 }
+             ]]>
+        </example>
+    </rule>
+
+    <rule name="LongParameterListRule" message="The method {0} has too many parameters, {1} are counted. The parameters should be merged into objects or the method should be split." class="nl.utwente.processing.pmd.rules.LongParameterListRule">
+        <description>
+            Methods should not accept too many parameters.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+                 void correct(int x1, int x2, int y1, int y2, int r) {
+                     //Correct, 5 parameters.
+                 }
+                 void incorrect(int x1, int x2, int z1, int y1, int y2, int z2) {
+                     //Wrong: 6 parameters.
+                 }
+             ]]>
+        </example>
+    </rule>
+
+
+
+    <rule name="PixelHardcodeIgnoranceRule" message="Do not use literals for pixels for {0} inside method {1}." class="nl.utwente.processing.pmd.rules.PixelHardcodeIgnoranceRule">
+        <description>
+			Drawing functions should not use pixels, but constants or variables instead.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+				void draw() {
+				    //Wrong: Do not use hardcoded pixels.
+				    rect(10, 10, 20, 20);
+				}
+			]]>
+        </example>
+    </rule>
+
+    <rule name="StatelessClassRule" message="Class {0} does not declare any fields. The class should be removed by moving methods to the global scope." class="nl.utwente.processing.pmd.rules.StatelessClassRule">
+        <description>
+			Stateless classes are not allowed. Utility classes with only methods should define their methods in the
+			top class (global scope).
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+				//Wrong: This class has no fields and is stateless.
+				class Stateless {
+					void draw() {
+						rect(20, 30, 10, 10);
+					}
+				}
+			]]>
+        </example>
+    </rule>
+
+    <rule name="GodClassRule" message="The class {0} has too much responsibility. The program design should be reconsidered (God Class, WMC={1}, ATFD={2}, TCC={3})" class="nl.utwente.processing.pmd.rules.GodClassRule">
+        <description>
+			Classes should not become a God Class, e.g. they should not take total responsibility for the whole application.
+        </description>
+        <priority>3</priority>
+
+        <example>
+            <![CDATA[
+                class GodClass {
+                    void draw() {
+                        rect(20, 30, 10, 10);
+                    }
+
+                    void setup() {
+                        size(400, 400);
+                    }
+
+                    void mousePressed() {
+                        println("Mouse pressed");
+                    }
+
+                    void keyPressed() {
+                        println("Key pressed");
+                    }
+                }
+            ]]>
+        </example>
+
+
+
+    </rule>
+    <rule name="OutOfScopeStateChangeRule" message="Do not change variable {0} in the {1}, as {0} is not defined within the scope of class." class="nl.utwente.processing.pmd.rules.OutOfScopeStateChangeRule">
+        <description>
+            Variables, that are defined outside the scope of a class, should never have their state altered even if
+            they class has access to them. Boolean expressions are allowed however.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+			    Foo foo;
+			    int bar;
+
+			    void setup() {
+			        bar = 32;
+			        foo = new Foo();
+			    }
+
+			    draw() {
+    			    // Wrong: Do not change the state of 'baz' withing 'foo', as 'baz' is not defined withing the
+    			    // scope of the main class.
+			        foo.baz = bar;
+			        // Correct: You can check the state of tne variable 'baz' even though it is not defined within
+			        // the scope of the main class.
+			        if (foo.baz == 0) {
+			            bar = -1;
+			        }
+			    {
+
+			    class Foo {
+			        int baz;
+
+			        Foo() {
+			            baz = 0;
+			            // Wrong: Do not change the state of global variable 'bar' from inner class 'Foo'.
+			            bar = 23;
+			        }
+
+			   }
+			]]>
+        </example>
+    </rule>
+
+
+    <!--BEST PRACTICES-->
+
+    <rule ref="category/java/bestpractices.xml/AvoidReassigningLoopVariables">
+        <properties>
+            <property name="foreachReassign" value="deny" />
+            <property name="forReassign" value="deny" />
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/AvoidReassigningParameters" />
+
+    <rule ref="category/java/bestpractices.xml/ForLoopVariableCount">
+        <properties>
+            <property name="maximumVariables" value="1" />
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/OneDeclarationPerLine">
+        <properties>
+            <property name="strictMode" value="false" />
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/UnusedAssignment">
+        <properties>
+            <property name="checkUnusedPrefixIncrement" value="false" />
+            <property name="reportUnusedVariables" value="false" />
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/UnusedFormalParameter">
+        <properties>
+            <property name="checkAll" value="false" />
+        </properties>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable" />
+
+    <rule ref="category/java/codestyle.xml/AtLeastOneConstructor" />
+
+    <!--CODE STYLE-->
+
+
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions" />
+
+    <rule ref="category/java/codestyle.xml/ControlStatementBraces" />
+
+    <rule ref="category/java/codestyle.xml/FieldDeclarationsShouldBeAtStartOfClass" />
+
+    <rule ref="category/java/codestyle.xml/FieldNamingConventions" />
+
+    <rule ref="category/java/codestyle.xml/FormalParameterNamingConventions" />
+
+    <rule ref="category/java/codestyle.xml/LocalVariableNamingConventions" />
+
+    <rule ref="category/java/codestyle.xml/LongVariable" />
+
+    <rule ref="category/java/codestyle.xml/MethodNamingConventions" />
+
+
+    <rule ref="category/java/codestyle.xml/ShortClassName" />
+
+    <rule ref="category/java/codestyle.xml/ShortMethodName" />
+
+    <rule ref="category/java/codestyle.xml/ShortVariable" />
+
+    <rule ref="category/java/codestyle.xml/UnnecessaryConstructor" />
+
+    <!--DESIGN-->
+
+    <rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts" />
+
+    <rule ref="category/java/design.xml/CognitiveComplexity" />
+
+    <rule ref="category/java/design.xml/CollapsibleIfStatements" />
+
+    <rule ref="category/java/design.xml/CouplingBetweenObjects" />
+
+    <rule ref="category/java/design.xml/CyclomaticComplexity" />
+
+    <rule ref="category/java/design.xml/ExcessiveParameterList" />
+
+    <rule ref="category/java/design.xml/GodClass" />
+
+    <rule ref="category/java/design.xml/LawOfDemeter" />
+
+    <rule ref="category/java/design.xml/SimplifyBooleanExpressions" />
+
+    <rule ref="category/java/design.xml/SimplifyBooleanReturns" />
+
+    <rule ref="category/java/design.xml/SimplifyConditional" />
+
+    <rule ref="category/java/design.xml/SingularField" />
+
+    <rule ref="category/java/design.xml/TooManyFields" />
+
+    <rule ref="category/java/design.xml/TooManyMethods" />
+
+    <!-- ERROR PRONE  -->
+
+    <rule ref="category/java/errorprone.xml/AssignmentInOperand" />
+
+    <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />
+
+    <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingTypeName" />
+
+    <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition" />
+
+    <rule ref="category/java/errorprone.xml/IdempotentOperations" />
+
+    <rule ref="category/java/errorprone.xml/MethodWithSameNameAsEnclosingClass" />
+
+    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement" />
+
+</ruleset>
