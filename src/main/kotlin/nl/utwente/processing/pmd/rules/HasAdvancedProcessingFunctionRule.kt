@@ -13,32 +13,40 @@ import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule
  */
 class HasAdvancedProcessingFunctionRule : AbstractJavaRule() {
 
-    private val advancedProcessingFunctions = setOf(
-        "rotate", "scale", "shearX", "shearY", "applyMatrix",
-        "pushMatrix", "popMatrix",
-        "beginShape", "endShape", "curveVertex", "bezierVertex",
+    private val advancedFunctions = setOf(
+        "shearX", "shearY", "translate",
+        "vertex", "bezierVertex", "curveVertex",
+        "quadraticVertex","costrain",
+        "pushMatrix",
+        "beginShape", "endShape",
+        "curveVertex", "bezierVertex",
         "texture", "textureMode", "get", "set", "loadPixels", "updatePixels",
-        "loadImage", "image", "loadFont", "textFont", "createFont",
-        "frameRate", "frameCount", "millis",
+        "frameRate", "frameCount",
         "loadStrings", "saveStrings", "loadTable", "saveTable",
         "loadJSONObject", "saveJSONObject", "loadXML", "saveXML"
     )
+    private var firstMatch: Pair<Node, String>? = null
 
-    override fun visit(node: ASTPrimaryExpression, data: Any): Any {
+    override fun visit(node: ASTPrimaryExpression?, data: Any?): Any? {
+        if (node == null) return data
+
         val prefix = node.getFirstChildOfType(ASTPrimaryPrefix::class.java)
         val nameNode = prefix?.getFirstChildOfType(ASTName::class.java)
+        val methodName = nameNode?.image?.substringAfterLast(".")
 
-        val methodName = nameNode?.image?.substringAfterLast(".") ?: return super.visit(node, data)
-
-        if (methodName in advancedProcessingFunctions) {
-            addViolationWithMessage(
-                data as RuleContext,
-                node,
-                "Advanced Processing function '$methodName' used. Tutors should review this with the student to assess understanding.",
-                0,0
-            )
+        if (firstMatch == null && methodName != null && methodName in advancedFunctions) {
+            firstMatch = node to methodName
         }
 
         return super.visit(node, data)
+    }
+
+    override fun end(ctx: RuleContext?) {
+        if (ctx != null && firstMatch != null) {
+            val (node, method) = firstMatch!!
+            val msg = "Submission uses '$method'. Consider asking the student about its purpose."
+            addViolationWithMessage(ctx, node, msg, node.beginLine, node.endLine)
+        }
+        super.end(ctx)
     }
 }

@@ -1,29 +1,45 @@
 package nl.utwente.processing.pmd.rules
 
-import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceDeclaration
-import net.sourceforge.pmd.lang.java.ast.ASTCompilationUnit
+import net.sourceforge.pmd.lang.java.ast.ASTPrimaryExpression
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule
-import net.sourceforge.pmd.lang.java.symboltable.ClassScope
+import net.sourceforge.pmd.RuleContext
 import nl.utwente.processing.pmd.symbols.ProcessingApplet
-import nl.utwente.processing.pmd.utils.findMethods
+import nl.utwente.processing.pmd.symbols.ProcessingAppletMethodCategory
+import nl.utwente.processing.pmd.utils.matches
+import net.sourceforge.pmd.lang.ast.Node
 
-class HasShapesRule: AbstractJavaRule() {
+class Has2DShapesRule : AbstractJavaRule() {
 
-    override fun visit(node: ASTCompilationUnit?, data: Any?): Any? {
-        return super.visit(node, data)
-    }
+    private var shape2DCount = 0
+    private var firstNode: Node? = null
+    private var firstShapeNode: Node? = null
 
-    override fun visit(node: ASTClassOrInterfaceDeclaration, data: Any): Any? {
-        //Check if this is a top node, not a inner class.
-        if (!node.isNested) {
-            val scope = node.scope as? ClassScope
-            val methodDecls = scope?.findMethods(ProcessingApplet.DRAW_METHODS);
-            if (methodDecls.isNullOrEmpty()) {
-                // setting line and column to 0, as this is a class level violation and does not have a specific line
-                addViolationWithMessage(data, node, message,0,0)
+    override fun visit(node: ASTPrimaryExpression, data: Any): Any? {
+        if (firstNode == null) {
+            firstNode = node
+        }
+
+        if (
+            ProcessingApplet.DRAW_METHODS
+                .filter { it.category == ProcessingAppletMethodCategory.SHAPE_2D }
+                .any { shapeMethod -> node.matches(shapeMethod) }
+        ) {
+            shape2DCount++
+            if (firstShapeNode == null) {
+                firstShapeNode = node
             }
         }
+
         return super.visit(node, data)
     }
 
+    override fun end(ctx: RuleContext?) {
+        if (ctx != null && shape2DCount < 2) {
+            val nodeToReport = firstShapeNode ?: firstNode
+            if (nodeToReport != null) {
+                addViolationWithMessage(ctx, nodeToReport, message, 0, 0)
+            }
+        }
+        super.end(ctx)
+    }
 }
